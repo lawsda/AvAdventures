@@ -12,6 +12,7 @@ public class Score : MonoBehaviour {
 
 	public GUIStyle scoreStyle;
 	public GUIStyle GOStyle;
+	public GUIStyle btnStyle;
 
 	// Use this for initialization
 	void Start () {
@@ -28,18 +29,21 @@ public class Score : MonoBehaviour {
 	void OnGUI () {
 		GUI.Box (new Rect (sWidth / 4, 0, sWidth / 2, sHeight / 15), "");
 		string scoreLabel = "Score: " + score;
+		scoreStyle.fontSize = (int) sHeight / 16;
 		GUI.Label (new Rect (sWidth / 4, 0, sWidth / 2, sHeight / 15), scoreLabel, scoreStyle); 
 
 
 		if (isDead) {
 			GUI.Label (new Rect (0, sHeight / 3, sWidth, sHeight), "Game Over", GOStyle);
-			if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2 , sWidth / 5, sHeight / 10), "Retry")) {
+			GOStyle.fontSize = (int)sHeight/12;
+			if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2 , sWidth / 5, sHeight / 10), "Retry", btnStyle)) {
 				Application.LoadLevel(1);
 			}
 			
-			if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight *2/3, sWidth / 5, sHeight / 10), "Main Menu")) {
+			if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight *2/3, sWidth / 5, sHeight / 10), "Main Menu", btnStyle)) {
 				Application.LoadLevel(0);
 			}
+			btnStyle.fontSize = (int)sHeight/25;
 		}
 	}
 

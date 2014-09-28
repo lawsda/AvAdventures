@@ -10,7 +10,9 @@ public class MainMenu : MonoBehaviour {
 	private float speed = .6f;
 
 	public GUIStyle titleStyle;
+	public GUIStyle title2Style;
 	public GUIStyle creditsStyle;
+	public GUIStyle btnStyle;
 	
 
 	// Use this for initialization
@@ -40,28 +42,35 @@ public class MainMenu : MonoBehaviour {
 		if (showCredits == false) {
 						GUI.BeginGroup (new Rect (0, 0, sWidth, sHeight));
 						GUI.Label (new Rect (0, sHeight / 6, sWidth, sHeight), "Avalanche Adventures", titleStyle);
-						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2 - sHeight / 5, sWidth / 5, sHeight / 10), "Arcade")) {
+						GUI.Label (new Rect (0, sHeight / 6, sWidth, sHeight), "Avalanche Adventures", title2Style);
+						titleStyle.fontSize = (int)sHeight/12;
+						title2Style.fontSize = (int)sHeight/12;
+						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2 - sHeight / 5, sWidth / 5, sHeight / 10), "Arcade", btnStyle)) {
 							Application.LoadLevel(1);
 						}
 
-						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2, sWidth / 5, sHeight / 10), "Credits")) {
+						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2, sWidth / 5, sHeight / 10), "Credits", btnStyle)) {
 								showCredits = true;
 						}
+						btnStyle.fontSize = (int)sHeight/25;
 						GUI.EndGroup ();
 				} else if (showCredits == true) {
 
 						GUI.BeginGroup (new Rect (0, 0, sWidth, sHeight));
 						GUI.Label (new Rect (0, sHeight / 6, sWidth, sHeight), "Credits", titleStyle);
+						GUI.Label (new Rect (0, sHeight / 6, sWidth, sHeight), "Credits", title2Style);
 					
 						
 						string creditsText = "\nProduction: David Laws\nArtwork: Jack Einhorn\nopengameart.org\nMusic: westarmusic.com" +
-							"\n\n\n\n______________________\nMGMS Full Sail\nStoryboard Design\n9/21/14";
+							"\n______________________\nMGMS Full Sail\nStoryboard Design\n9/28/14";
 						GUI.Label (new Rect(0, sHeight/4 + sHeight/15, sWidth, sHeight), creditsText, creditsStyle);
-						
+						creditsStyle.fontSize = (int)sHeight/20;
 
-						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight - sHeight/15, sWidth / 5, sHeight / 20), "Return")) {
+						
+						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight - sHeight/15, sWidth / 5, sHeight / 20), "Return", btnStyle)) {
 							showCredits = false;
 						}
+						btnStyle.fontSize = (int)sHeight/30;
 						GUI.EndGroup ();
 				}
 

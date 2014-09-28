@@ -10,6 +10,9 @@ public class CharacterMovement : MonoBehaviour {
 	private bool dead = false;
 	private int death = 0;
 
+	public GUIStyle btnRStyle;
+	public GUIStyle btnLStyle;
+
 
 	// Use this for initialization
 	void Start () {
@@ -34,10 +37,10 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void OnGUI(){
-		if (GUI.RepeatButton (new Rect (0, sHeight - sHeight / 18, sWidth / 16, sHeight / 18), "<")) {
+		if (GUI.RepeatButton (new Rect (0, sHeight - sHeight / 17, sWidth / 16, sHeight / 17), "", btnLStyle)) {
 			dir = -1;
 			transform.localScale = new Vector3(1, 1, 1);
-		}if (GUI.RepeatButton (new Rect (sWidth - sWidth / 16, sHeight - sHeight / 18, sWidth / 16, sHeight / 18), ">")) {
+		}if (GUI.RepeatButton (new Rect (sWidth - sWidth / 16, sHeight - sHeight / 18, sWidth / 16, sHeight / 18), "", btnRStyle)) {
 			dir = 1;
 			transform.localScale = new Vector3(-1, 1, 1);
 		}
