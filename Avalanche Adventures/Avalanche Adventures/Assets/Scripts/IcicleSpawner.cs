@@ -2,16 +2,19 @@
 using System.Collections;
 
 public class IcicleSpawner : MonoBehaviour {
-	
+
+	//Private variables
 	private float sWidth;
 	private float sHeight;
 	private int spawnTimer = 0;
-	
-	public GameObject icicle;
 
 	private int score;
 
 	private Vector3[] SpawnPoints = new Vector3[12];
+
+
+	//Public variables
+	public GameObject icicle;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +22,6 @@ public class IcicleSpawner : MonoBehaviour {
 		sWidth = Screen.width;
 
 		for(int i = 1; i < 13; i++){
-
 			Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(sWidth *i/13, sHeight, 10));
 			SpawnPoints[i-1] = pos;
 		}

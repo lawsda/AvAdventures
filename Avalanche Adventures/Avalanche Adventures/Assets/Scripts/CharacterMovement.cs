@@ -3,13 +3,15 @@ using System.Collections;
 
 public class CharacterMovement : MonoBehaviour {
 
+	//Private variables
 	private float sHeight;
 	private float sWidth;
-	public float speed;
 	private int dir = 0;
 	private bool dead = false;
 	private int death = 0;
 
+	//Public variables
+	public float speed;
 	public GUIStyle btnRStyle;
 	public GUIStyle btnLStyle;
 
@@ -37,6 +39,7 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		//Control buttons
 		if (GUI.RepeatButton (new Rect (0, sHeight - sHeight / 17, sWidth / 16, sHeight / 17), "", btnLStyle)) {
 			dir = -1;
 			transform.localScale = new Vector3(1, 1, 1);
