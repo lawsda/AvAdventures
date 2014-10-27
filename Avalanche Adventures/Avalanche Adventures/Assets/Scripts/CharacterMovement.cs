@@ -9,21 +9,52 @@ public class CharacterMovement : MonoBehaviour {
 	private int dir = 0;
 	private bool dead = false;
 	private int death = 0;
+	private bool hasPower = false;
+	public int cooldown;
+
+	//PlayerPrefs Storage
+	private int currency = 0;
+	private string currencyKey = "Crystals";
+	private int level = 1;
+	private string levelKey = "CharLevel";
 
 	//Public variables
 	public float speed;
 	public GUIStyle btnRStyle;
 	public GUIStyle btnLStyle;
+	public GUIStyle blank;
+	public GameObject Power;
+	public int powerCD;
 
+	//Holdover for animations
+	public Sprite UnequipPlayer;
+	public Sprite EquipPlayer;
 
 	// Use this for initialization
 	void Start () {
 		sHeight = Screen.height;
 		sWidth = Screen.width;
+
+		currency = PlayerPrefs.GetInt (currencyKey, 0);
+		level = PlayerPrefs.GetInt (levelKey, 1);
+
+		//power CD, goes down by 1s each level;
+		cooldown = 60 * (19 - level);
 	}
 
 	// Update is called once per frame
 	void Update () {
+		if (powerCD > 0 && !hasPower)
+						powerCD--;
+				else {
+			hasPower = true;
+				}
+
+		if (hasPower) {
+			gameObject.GetComponent<SpriteRenderer>().sprite = EquipPlayer;
+				}
+
+
 		//edge check
 		if (transform.position.x >= 7.6 && dir == 1)
 						dir = 0;
@@ -39,6 +70,12 @@ public class CharacterMovement : MonoBehaviour {
 	}
 
 	void OnGUI(){
+		//Key Input Based Control Scheme
+		//For web version only
+		// /*
+		// */
+
+		//UI Based Control Scheme
 		//Control buttons
 		if (GUI.RepeatButton (new Rect (0, sHeight - sHeight / 17, sWidth / 16, sHeight / 17), "", btnLStyle)) {
 			dir = -1;
@@ -48,6 +85,19 @@ public class CharacterMovement : MonoBehaviour {
 			transform.localScale = new Vector3(-1, 1, 1);
 		}
 
+		//Power activation
+		if (GUI.Button (new Rect (0, 0, sWidth, sHeight), "", blank)) {
+			if(hasPower){
+				powerCD = cooldown;
+				hasPower = false;
+				gameObject.GetComponent<SpriteRenderer>().sprite = UnequipPlayer;
+				UsePower();
+			}
+		}
+	}
+
+	void UsePower(){
+		Instantiate (Power, transform.position, Power.transform.rotation);
 	}
 
 	void OnTriggerEnter2D(Collider2D target){
@@ -60,5 +110,12 @@ public class CharacterMovement : MonoBehaviour {
 			gameObject.GetComponent<BoxCollider2D>().enabled = false;
 						dead = true;
 				}
+		if (target.gameObject.tag == "Currency") {
+			Destroy(target.gameObject);
+			currency++;
+			PlayerPrefs.SetInt (currencyKey, currency);
+			PlayerPrefs.Save();
+				}
 	}
+	
 }

@@ -7,9 +7,17 @@ public class Score : MonoBehaviour {
 	private float sHeight;
 	private float sWidth;
 	private int deathTimer = 180;
+	private int powerCD;
 
+	//PlayerPrefs Storage
 	private int highScore = 0;
 	private string highScoreKey = "HighScore";
+	private int currency = 0;
+	private string currencyKey = "Crystals";
+	private int exp = 0;
+	private string expKey = "CharEXP";
+//	private string levelKey = "CharLevel";
+
 
 	//Public variables
 	public bool isDead = false;
@@ -25,10 +33,16 @@ public class Score : MonoBehaviour {
 		sWidth = Screen.width;
 
 		highScore = PlayerPrefs.GetInt (highScoreKey, 0);
+		currency = PlayerPrefs.GetInt (currencyKey, 0);
+		exp = PlayerPrefs.GetInt (expKey, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		currency = PlayerPrefs.GetInt (currencyKey, 0);
+		if(GameObject.FindGameObjectWithTag ("Player") != null)
+		powerCD = GameObject.FindGameObjectWithTag ("Player").GetComponent<CharacterMovement> ().powerCD;
+
 		if (!isDead) {
 			score++;
 		}
@@ -49,6 +63,14 @@ public class Score : MonoBehaviour {
 			PlayerPrefs.SetInt(highScoreKey, score);
 			PlayerPrefs.Save();
 		}
+		//Reset exp/level
+		 /* *Uncomment levelKey*
+		exp = 0;
+		PlayerPrefs.SetInt (levelKey, 1);
+		// */
+		exp += (int) (score / 60);
+		PlayerPrefs.SetInt (expKey, exp);
+		PlayerPrefs.Save ();
 	}
 	
 	void OnGUI () {
@@ -58,9 +80,10 @@ public class Score : MonoBehaviour {
 		GUI.Label (new Rect (2, 0, sWidth, sHeight), HSLabel, HSStyle);
 
 		//UI
-		GUI.Box (new Rect (sWidth / 4, 0, sWidth / 2, sHeight / 15), "");
-		string scoreLabel = "Score: " + score;
-		scoreStyle.fontSize = (int) sHeight / 16;
+		int UIpowerCD = (powerCD > 0) ? ((powerCD / 60)+1) : 0;
+		GUI.Box (new Rect (sWidth / 6, 0, sWidth *2/ 3, sHeight / 15), "");
+		string scoreLabel = "Crystals: " + currency + "  Score: " + score + "  Power - "+UIpowerCD+"s";
+		scoreStyle.fontSize = (int) sHeight / 20;
 		GUI.Label (new Rect (sWidth / 4, 0, sWidth / 2, sHeight / 15), scoreLabel, scoreStyle); 
 
 

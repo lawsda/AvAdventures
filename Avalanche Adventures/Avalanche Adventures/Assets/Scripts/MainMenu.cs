@@ -78,13 +78,13 @@ public class MainMenu : MonoBehaviour {
 						GUI.Label (new Rect (0, sHeight / 6, sWidth, sHeight), "Credits", title2Style);
 					
 						
-						string creditsText = "\nProduction: David Laws\nArtwork: Jack Einhorn\nopengameart.org\nMusic: westarmusic.com" +
+						string creditsText = "\nProduction: David Laws\nArtwork: Jack Einhorn\nMusic: Nick White" +
 							"\n______________________\nMGMS - Full Sail University\nCapstone";
 						GUI.Label (new Rect(0, sHeight/4 + sHeight/15, sWidth, sHeight), creditsText, creditsStyle);
 						creditsStyle.fontSize = (int)sHeight/20;
 
 						
-						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight - sHeight/15, sWidth / 5, sHeight / 20), "Return", btnStyle)) {
+						if (GUI.Button (new Rect (sWidth - sWidth / 8, 0 , sWidth / 8, sHeight / 15), "Return", btnStyle)) {
 							showCredits = false;
 						}
 						btnStyle.fontSize = (int)sHeight/30;

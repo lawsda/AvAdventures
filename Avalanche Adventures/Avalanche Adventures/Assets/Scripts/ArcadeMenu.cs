@@ -6,16 +6,28 @@ public class ArcadeMenu : MonoBehaviour {
 	//Private variables
 	private float sHeight;
 	private float sWidth;
+	private int levelExp;
 
 	private int highScore = 0;
 	private string highScoreKey = "HighScore";
+	private int level = 1;
+	private string levelKey = "CharLevel";
+	private int exp = 0;
+	private string expKey = "CharEXP";
+	private int charSelected = 0;
+	private string charSelectKey = "CharacterSelected";
 
 	//Public variables
 	public GUIStyle titleStyle;
 	public GUIStyle title2Style;
 	public GUIStyle btnStyle;
 	public GUIStyle HSStyle;
+	public GUIStyle expStyle;
 
+	//Characters
+	public GameObject Edmund;
+	public GameObject Cinder;
+	private GameObject Player;
 
 
 	// Use this for initialization
@@ -24,11 +36,23 @@ public class ArcadeMenu : MonoBehaviour {
 		sWidth = Screen.width;
 
 		highScore = PlayerPrefs.GetInt (highScoreKey, 0);
+		level = PlayerPrefs.GetInt (levelKey, 1);
+		exp = PlayerPrefs.GetInt (expKey, 0);
+		charSelected = PlayerPrefs.GetInt (charSelectKey, 0);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		levelExp = (int) (120 + 120 * (1.5 * (level - 1)));
+		if (exp >= levelExp) {
+			level++;
+		}
+	}
+
+	void OnDisable(){
+		PlayerPrefs.SetInt(levelKey, level);
+		PlayerPrefs.Save();
 	}
 
 	void OnGUI () {
@@ -56,20 +80,33 @@ public class ArcadeMenu : MonoBehaviour {
 		btnStyle.fontSize = (int)sHeight/25;
 		if (GUI.Button (new Rect (sWidth / 5, sHeight / 2 , sWidth / 5, sHeight / 10), "Start", btnStyle)) {
 			//Start the game
+			//Spawn Player
+			if(charSelected == 0)
+				Player = Edmund;
+			else if(charSelected == 1)
+				Player = Cinder;
+
+			Instantiate(Player, Player.transform.position, Player.transform.rotation);
+
+			//Load game settings
 			this.gameObject.GetComponent<AudioSource> ().enabled = true;
 			this.gameObject.GetComponent<Score> ().enabled = true;
-			GameObject.Find("Climber_v2.1").gameObject.GetComponent<CharacterMovement>().enabled = true;
+			GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<CharacterMovement>().enabled = true;
 			GameObject.Find("Spawner").gameObject.GetComponent<IcicleSpawner>().enabled = true;
 			GameObject.Find("IceMenu").gameObject.GetComponent<AudioSource>().enabled = false;
 			transform.position = new Vector3(0,0,-10);
 			this.gameObject.GetComponent<ArcadeMenu> ().enabled = false;
 		}
 
-		if (GUI.Button (new Rect (sWidth *3/5, sHeight / 2, sWidth / 5, sHeight / 10), "Shop", btnStyle)) {
 
+		string expLabel = "Level: "+ level +"\n\n\n\nEXP: "+exp+"/"+levelExp;
+		GUI.Label (new Rect (sWidth / 2 - sWidth / 10, sHeight/2 - sHeight/12, sWidth / 5, sHeight / 20), expLabel, expStyle);
+
+		if (GUI.Button (new Rect (sWidth *3/5, sHeight / 2, sWidth / 5, sHeight / 10), "Characters", btnStyle)) {
+			Application.LoadLevel(2);
 		}
 		btnStyle.fontSize = (int)sHeight/30;
-		if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight - sHeight/15, sWidth / 5, sHeight / 20), "Return", btnStyle)) {
+		if (GUI.Button (new Rect (sWidth - sWidth / 8, 0, sWidth / 8, sHeight / 15), "Return", btnStyle)) {
 			Application.LoadLevel(0);
 		}
 

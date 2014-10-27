@@ -22,7 +22,7 @@ public class IcicleSpawner : MonoBehaviour {
 		sWidth = Screen.width;
 
 		for(int i = 1; i < 13; i++){
-			Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(sWidth *i/13, sHeight, 10));
+			Vector3 pos = Camera.main.ScreenToWorldPoint(new Vector3(sWidth *i/18, sHeight, 10));
 			SpawnPoints[i-1] = pos;
 		}
 	
