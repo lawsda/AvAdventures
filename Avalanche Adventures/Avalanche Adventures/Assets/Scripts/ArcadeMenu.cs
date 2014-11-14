@@ -12,8 +12,8 @@ public class ArcadeMenu : MonoBehaviour {
 	private string highScoreKey = "HighScore";
 	private int level = 1;
 	private string levelKey = "CharLevel";
-	private int exp = 0;
-	private string expKey = "CharEXP";
+	private int currentPlayerExp = 0;
+	private string playerExpKey = "PlayerExp";
 	private int charSelected = 0;
 	private string charSelectKey = "CharacterSelected";
 
@@ -36,16 +36,18 @@ public class ArcadeMenu : MonoBehaviour {
 		sWidth = Screen.width;
 
 		highScore = PlayerPrefs.GetInt (highScoreKey, 0);
-		level = PlayerPrefs.GetInt (levelKey, 1);
-		exp = PlayerPrefs.GetInt (expKey, 0);
 		charSelected = PlayerPrefs.GetInt (charSelectKey, 0);
+		playerExpKey += charSelected;
+		currentPlayerExp = PlayerPrefs.GetInt (playerExpKey, 0);
+		levelKey += charSelected;
+		level = PlayerPrefs.GetInt (levelKey, 1);
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		levelExp = (int) (120 + 120 * (1.5 * (level - 1)));
-		if (exp >= levelExp) {
+		if (currentPlayerExp >= levelExp) {
 			level++;
 		}
 	}
@@ -99,8 +101,8 @@ public class ArcadeMenu : MonoBehaviour {
 		}
 
 
-		string expLabel = "Level: "+ level +"\n\n\n\nEXP: "+exp+"/"+levelExp;
-		GUI.Label (new Rect (sWidth / 2 - sWidth / 10, sHeight/2 - sHeight/12, sWidth / 5, sHeight / 20), expLabel, expStyle);
+		string expLabel = "Level: "+ level +"\nEXP: "+currentPlayerExp+"/"+levelExp;
+		GUI.Label (new Rect (sWidth / 2 - sWidth / 10, sHeight/2 + sHeight/12, sWidth / 5, sHeight / 20), expLabel, expStyle);
 
 		if (GUI.Button (new Rect (sWidth *3/5, sHeight / 2, sWidth / 5, sHeight / 10), "Characters", btnStyle)) {
 			Application.LoadLevel(2);

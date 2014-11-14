@@ -5,9 +5,13 @@ public class PickMovement : MonoBehaviour {
 
 	public float fallSpeed;
 
+	private float sHeight;
+
 	// Use this for initialization
 	void Start () {
-	
+		sHeight = Screen.height;
+
+		fallSpeed = sHeight / 60.0f;
 	}
 	
 	// Update is called once per frame

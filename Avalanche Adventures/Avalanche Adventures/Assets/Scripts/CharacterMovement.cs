@@ -10,13 +10,18 @@ public class CharacterMovement : MonoBehaviour {
 	private bool dead = false;
 	private int death = 0;
 	private bool hasPower = false;
-	public int cooldown;
+	private int castingPower = 0;
+	private Animator anim;
 
 	//PlayerPrefs Storage
 	private int currency = 0;
 	private string currencyKey = "Crystals";
 	private int level = 1;
 	private string levelKey = "CharLevel";
+	private int charSelected = 0;
+	private string charSelectKey = "CharacterSelected";
+	private int upgradeLevel = 1;
+	private string upgradeLevelKey = "UpgradeLevel";
 
 	//Public variables
 	public float speed;
@@ -24,18 +29,20 @@ public class CharacterMovement : MonoBehaviour {
 	public GUIStyle btnLStyle;
 	public GUIStyle blank;
 	public GameObject Power;
+	public int cooldown;
 	public int powerCD;
-
-	//Holdover for animations
-	public Sprite UnequipPlayer;
-	public Sprite EquipPlayer;
 
 	// Use this for initialization
 	void Start () {
 		sHeight = Screen.height;
 		sWidth = Screen.width;
+		anim = GetComponent<Animator> ();
+
 
 		currency = PlayerPrefs.GetInt (currencyKey, 0);
+		charSelected = PlayerPrefs.GetInt (charSelectKey, 0);
+		upgradeLevel = PlayerPrefs.GetInt (upgradeLevelKey + charSelected, 1);
+		levelKey += charSelected;
 		level = PlayerPrefs.GetInt (levelKey, 1);
 
 		//power CD, goes down by 1s each level;
@@ -51,9 +58,22 @@ public class CharacterMovement : MonoBehaviour {
 				}
 
 		if (hasPower) {
-			gameObject.GetComponent<SpriteRenderer>().sprite = EquipPlayer;
+						anim.SetBool ("playerEquip", true);
+				} else {
+			anim.SetBool ("playerEquip", false);
 				}
 
+		if (castingPower > 0) {
+			if((castingPower %60) == 0)
+				UsePower();
+			castingPower--;
+				}
+
+		//move animation
+		if(dir != 0)
+			anim.SetBool("playerWalking", true);
+		else
+			anim.SetBool("playerWalking", false);
 
 		//edge check
 		if (transform.position.x >= 7.6 && dir == 1)
@@ -62,6 +82,7 @@ public class CharacterMovement : MonoBehaviour {
 						dir = 0;
 		transform.Translate (speed * dir * Time.deltaTime, 0, 0);
 		dir = 0;
+
 
 		if (dead)
 						death++;
@@ -90,8 +111,7 @@ public class CharacterMovement : MonoBehaviour {
 			if(hasPower){
 				powerCD = cooldown;
 				hasPower = false;
-				gameObject.GetComponent<SpriteRenderer>().sprite = UnequipPlayer;
-				UsePower();
+				castingPower = (60*upgradeLevel);
 			}
 		}
 	}

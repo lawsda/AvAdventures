@@ -11,7 +11,20 @@ public class CharacterSelect : MonoBehaviour {
 	private string highScoreKey = "HighScore";
 	private int charSelected = 0;
 	private string charSelectKey = "CharacterSelected";
-	
+	private int playerExp;
+	private string playerExpKey = "PlayerExp";
+	private int level = 1;
+	private string levelKey = "CharLevel";
+	private int upgradeLevel = 1;
+	private string upgradeLevelKey = "UpgradeLevel";
+	private int currency = 0;
+	private string currencyKey = "Crystals";
+
+	private string edmundAbility;
+	private string cinderAbility;
+	private string edmundUpgrade;
+	private string cinderUpgrade;
+
 	//Public variables
 	public GUIStyle titleStyle;
 	public GUIStyle title2Style;
@@ -22,8 +35,10 @@ public class CharacterSelect : MonoBehaviour {
 	//Character Styles
 	public GUIStyle EdmundStyle;
 	public GUIStyle CinderStyle;
+	public GUIStyle StatStyle;
 
 	public GUIStyle SelectStyle;
+	public GUIStyle UpgradeStyle;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +47,11 @@ public class CharacterSelect : MonoBehaviour {
 		
 		highScore = PlayerPrefs.GetInt (highScoreKey, 0);
 		charSelected = PlayerPrefs.GetInt (charSelectKey, 0);
+		currency = PlayerPrefs.GetInt (currencyKey, 0);
+
+		edmundAbility = "Pick-toss:\nToss an icepick into the air,\nshattering icicles in its path.";
+		cinderAbility = "Fireshield:\nCreate a temporary shield \nof fire to melt incoming icicles.";
+
 	}
 	
 	// Update is called once per frame
@@ -39,8 +59,9 @@ public class CharacterSelect : MonoBehaviour {
 		PlayerPrefs.SetInt(charSelectKey, charSelected);
 		PlayerPrefs.Save();
 	}
-
+	
 	void OnGUI () {
+		//Default GUI setings
 				//High Score
 				string HSLabel = "High Score: " + highScore;
 				HSStyle.fontSize = (int)sHeight / 30;
@@ -54,18 +75,52 @@ public class CharacterSelect : MonoBehaviour {
 
 			
 			
+
 			if (GUI.Button (new Rect (sWidth / 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Edmund", charBoxStyle)) {
 					charSelected = 0;
 				}
+			//Edmund display labels
 			GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", EdmundStyle);
+				playerExp = PlayerPrefs.GetInt (playerExpKey +"0", 0);
+				level = PlayerPrefs.GetInt (levelKey+"0", 1);
+			GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
 
 			if (GUI.Button (new Rect (sWidth *3/ 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Cinder", charBoxStyle)) {
 				charSelected = 1;
 			}
+			//Cinder display labels
 			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", CinderStyle);
+				playerExp = PlayerPrefs.GetInt (playerExpKey +"1", 0);
+				level = PlayerPrefs.GetInt (levelKey+"1", 1);
+			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
 
-			GUI.Label (new Rect (sWidth / 4, sHeight - sHeight / 10, sWidth / 2, sHeight / 16), "Selected Character", SelectStyle);
-		
+	
+
+		//Currently select Character info
+			//Set ability text label
+			string abilityText = "";
+			if (charSelected == 0)
+						abilityText = edmundAbility;
+				else if (charSelected == 1)
+						abilityText = cinderAbility;
+			GUI.Label (new Rect (sWidth / 3, sHeight - sHeight / 5, sWidth / 3, sHeight / 5), abilityText, SelectStyle);
+
+		//Currency
+		GUI.Label (new Rect (sWidth/12, sHeight - sHeight / 5, sWidth / 18, sHeight / 10), "x"+currency, SelectStyle);
+
+			
+		if (GUI.Button (new Rect (sWidth - sWidth / 8, sHeight*4 / 5, sWidth / 8, sHeight / 15), "Upgrade", btnStyle)) {
+				if((upgradeLevel*25) < currency){
+						currency -= (upgradeLevel*25);
+						upgradeLevel++;
+						PlayerPrefs.SetInt (upgradeLevelKey + charSelected, upgradeLevel);
+						PlayerPrefs.SetInt (currencyKey, currency);
+						PlayerPrefs.Save ();
+					}
+			}
+			upgradeLevel = PlayerPrefs.GetInt (upgradeLevelKey + charSelected, 1);
+			GUI.Label (new Rect (sWidth - sWidth / 5, sHeight * 6 / 7, sWidth / 5, sHeight / 8), "Cost: "+(upgradeLevel*25)+"\nLevel: " + upgradeLevel, SelectStyle);
+		           
 			btnStyle.fontSize = (int)sHeight/30;
 			if (GUI.Button (new Rect (sWidth  - sWidth / 8, 0, sWidth / 8, sHeight / 15), "Return", btnStyle)) {
 				//Load last scene
