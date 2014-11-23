@@ -22,8 +22,10 @@ public class CharacterSelect : MonoBehaviour {
 
 	private string edmundAbility;
 	private string cinderAbility;
+	private string robAbility;
 	private string edmundUpgrade;
 	private string cinderUpgrade;
+	private string robUpgrade;
 
 	//Public variables
 	public GUIStyle titleStyle;
@@ -35,6 +37,7 @@ public class CharacterSelect : MonoBehaviour {
 	//Character Styles
 	public GUIStyle EdmundStyle;
 	public GUIStyle CinderStyle;
+	public GUIStyle RobStyle;
 	public GUIStyle StatStyle;
 
 	public GUIStyle SelectStyle;
@@ -49,8 +52,10 @@ public class CharacterSelect : MonoBehaviour {
 		charSelected = PlayerPrefs.GetInt (charSelectKey, 0);
 		currency = PlayerPrefs.GetInt (currencyKey, 0);
 
-		edmundAbility = "Pick-toss:\nToss an icepick into the air,\nshattering icicles in its path.";
-		cinderAbility = "Fireshield:\nCreate a temporary shield \nof fire to melt incoming icicles.";
+		edmundAbility 	= "Pick-toss:\nToss an icepick into the air,\nshattering icicles in its path.\nUpgrade to increase pick number";
+		cinderAbility 	= "Flame Shield:\nSurrond yourself with a shield \nof fire to melt incoming icicles.\nUpgrade to increase duration";
+		robAbility 		= "Air Mines:\nShoot a mine into the air which\nexplods after a few seconds.\nUpgrade to increase mine number";
+
 
 	}
 	
@@ -85,17 +90,25 @@ public class CharacterSelect : MonoBehaviour {
 				level = PlayerPrefs.GetInt (levelKey+"0", 1);
 			GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
 
-			if (GUI.Button (new Rect (sWidth *3/ 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Cinder", charBoxStyle)) {
+			if (GUI.Button (new Rect (sWidth *2/ 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Cinder", charBoxStyle)) {
 				charSelected = 1;
 			}
 			//Cinder display labels
-			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", CinderStyle);
+			GUI.Label (new Rect (sWidth*2 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", CinderStyle);
 				playerExp = PlayerPrefs.GetInt (playerExpKey +"1", 0);
 				level = PlayerPrefs.GetInt (levelKey+"1", 1);
+			GUI.Label (new Rect (sWidth*2 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
+
+			if (GUI.Button (new Rect (sWidth *3/ 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Rob", charBoxStyle)) {
+				charSelected = 2;
+			}
+			//Rob display labels
+			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", RobStyle);
+			playerExp = PlayerPrefs.GetInt (playerExpKey +"2", 0);
+			level = PlayerPrefs.GetInt (levelKey+"2", 1);
 			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
-
-	
-
+		
+		
 		//Currently select Character info
 			//Set ability text label
 			string abilityText = "";
@@ -103,6 +116,8 @@ public class CharacterSelect : MonoBehaviour {
 						abilityText = edmundAbility;
 				else if (charSelected == 1)
 						abilityText = cinderAbility;
+				else if (charSelected == 2)
+						abilityText = robAbility;
 			GUI.Label (new Rect (sWidth / 3, sHeight - sHeight / 5, sWidth / 3, sHeight / 5), abilityText, SelectStyle);
 
 		//Currency

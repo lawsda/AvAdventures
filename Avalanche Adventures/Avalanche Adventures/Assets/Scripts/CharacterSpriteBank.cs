@@ -11,6 +11,7 @@ public class CharacterSpriteBank : MonoBehaviour {
 	//Static Player Sprites
 	public Sprite Edmund;
 	public Sprite Cinder;
+	public Sprite Rob;
 
 	// Use this for initialization
 	void Start () {
@@ -25,6 +26,8 @@ public class CharacterSpriteBank : MonoBehaviour {
 						Character = Edmund;
 				else if (charSelected == 1)
 						Character = Cinder;
+				else if (charSelected == 2)
+						Character = Rob;
 
 		this.gameObject.GetComponent<SpriteRenderer> ().sprite = Character;
 	}

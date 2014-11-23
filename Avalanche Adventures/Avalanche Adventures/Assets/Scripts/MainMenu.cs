@@ -60,11 +60,16 @@ public class MainMenu : MonoBehaviour {
 						GUI.Label (new Rect (0, sHeight / 6, sWidth, sHeight), "Avalanche Adventures", title2Style);
 						titleStyle.fontSize = (int)sHeight/12;
 						title2Style.fontSize = (int)sHeight/12;
-						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2 - sHeight / 5, sWidth / 5, sHeight / 10), "Arcade", btnStyle)) {
+						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight *3/ 10, sWidth / 5, sHeight / 10), "Arcade", btnStyle)) {
 							Application.LoadLevel(1);
 						}
 
-						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight / 2, sWidth / 5, sHeight / 10), "Credits", btnStyle)) {
+						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight *5/10, sWidth / 5, sHeight / 10), "Tutorial", btnStyle)) {
+							this.gameObject.GetComponent<Tutorial> ().enabled = true;
+							this.gameObject.GetComponent<MainMenu> ().enabled = false;
+						}
+
+						if (GUI.Button (new Rect (sWidth / 2 - sWidth / 10, sHeight *7/10, sWidth / 5, sHeight / 10), "Credits", btnStyle)) {
 								showCredits = true;
 						}
 						btnStyle.fontSize = (int)sHeight/25;

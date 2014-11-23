@@ -27,6 +27,7 @@ public class ArcadeMenu : MonoBehaviour {
 	//Characters
 	public GameObject Edmund;
 	public GameObject Cinder;
+	public GameObject Rob;
 	private GameObject Player;
 
 
@@ -87,6 +88,8 @@ public class ArcadeMenu : MonoBehaviour {
 				Player = Edmund;
 			else if(charSelected == 1)
 				Player = Cinder;
+			else if(charSelected == 2)
+				Player = Rob;
 
 			Instantiate(Player, Player.transform.position, Player.transform.rotation);
 

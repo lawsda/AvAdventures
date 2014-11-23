@@ -16,7 +16,7 @@ public class FlameMovement : MonoBehaviour {
 		y = GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.y;
 		x = GameObject.FindGameObjectWithTag ("Player").gameObject.transform.position.x;
 
-		transform.position = new Vector3 (x, y + 0.4f, -1);
+		transform.position = new Vector3 (x, y , -1);
 
 		timer--;
 		if (timer <= 0)

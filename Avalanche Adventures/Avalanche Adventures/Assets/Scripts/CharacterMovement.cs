@@ -47,6 +47,7 @@ public class CharacterMovement : MonoBehaviour {
 
 		//power CD, goes down by 1s each level;
 		cooldown = 60 * (19 - level);
+		powerCD = cooldown;
 	}
 
 	// Update is called once per frame

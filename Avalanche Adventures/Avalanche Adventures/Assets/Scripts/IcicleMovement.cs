@@ -9,7 +9,9 @@ public class IcicleMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		fallSpeed = Random.Range (4.0f, 6.0f);
+		fallSpeed /= 2;
+		fallSpeed *= -1;
 	}
 	
 	// Update is called once per frame
