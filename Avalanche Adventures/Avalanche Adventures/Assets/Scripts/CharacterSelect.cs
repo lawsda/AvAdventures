@@ -56,7 +56,9 @@ public class CharacterSelect : MonoBehaviour {
 		cinderAbility 	= "Flame Shield:\nSurrond yourself with a shield \nof fire to melt incoming icicles.\nUpgrade to increase duration";
 		robAbility 		= "Air Mines:\nShoot a mine into the air which\nexplods after a few seconds.\nUpgrade to increase mine number";
 
-
+		charBoxStyle.fontSize = (int) sHeight / 22;
+		StatStyle.fontSize = (int) sHeight / 22;
+		SelectStyle.fontSize = (int) sHeight / 28;
 	}
 	
 	// Update is called once per frame
@@ -85,28 +87,28 @@ public class CharacterSelect : MonoBehaviour {
 					charSelected = 0;
 				}
 			//Edmund display labels
-			GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", EdmundStyle);
+			GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight /4 + sHeight / 10, sHeight/7, sHeight/7), "", EdmundStyle);
 				playerExp = PlayerPrefs.GetInt (playerExpKey +"0", 0);
 				level = PlayerPrefs.GetInt (levelKey+"0", 1);
-			GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
+		GUI.Label (new Rect (sWidth / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + sHeight/6, sHeight/7, sHeight/7), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
 
 			if (GUI.Button (new Rect (sWidth *2/ 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Cinder", charBoxStyle)) {
 				charSelected = 1;
 			}
 			//Cinder display labels
-			GUI.Label (new Rect (sWidth*2 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", CinderStyle);
+		GUI.Label (new Rect (sWidth*2 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, sHeight/7, sHeight/7), "", CinderStyle);
 				playerExp = PlayerPrefs.GetInt (playerExpKey +"1", 0);
 				level = PlayerPrefs.GetInt (levelKey+"1", 1);
-			GUI.Label (new Rect (sWidth*2 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
+		GUI.Label (new Rect (sWidth*2 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + sHeight/6, sHeight/7, sHeight/7), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
 
 			if (GUI.Button (new Rect (sWidth *3/ 5, sHeight /4, sWidth / 5, sHeight *2/5 ), "Rob", charBoxStyle)) {
 				charSelected = 2;
 			}
 			//Rob display labels
-			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, 60, 60), "", RobStyle);
+		GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight /4 + sHeight / 10, sHeight/7, sHeight/7), "", RobStyle);
 			playerExp = PlayerPrefs.GetInt (playerExpKey +"2", 0);
 			level = PlayerPrefs.GetInt (levelKey+"2", 1);
-			GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + 60, 60, 60), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
+		GUI.Label (new Rect (sWidth*3 / 5 + sWidth / 18, sHeight / 4 + sHeight / 10 + sHeight/6, sHeight/7, sHeight/7), "Level: "+level + "\nExp: "+ playerExp, StatStyle);
 		
 		
 		//Currently select Character info

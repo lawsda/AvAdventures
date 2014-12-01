@@ -99,10 +99,10 @@ public class CharacterMovement : MonoBehaviour {
 
 		//UI Based Control Scheme
 		//Control buttons
-		if (GUI.RepeatButton (new Rect (0, sHeight - sHeight / 17, sWidth / 16, sHeight / 17), "", btnLStyle)) {
+		if (GUI.RepeatButton (new Rect (0, sHeight - sHeight / 15, sWidth / 14, sHeight / 15), "", btnLStyle)) {
 			dir = -1;
 			transform.localScale = new Vector3(1, 1, 1);
-		}if (GUI.RepeatButton (new Rect (sWidth - sWidth / 16, sHeight - sHeight / 18, sWidth / 16, sHeight / 18), "", btnRStyle)) {
+		}if (GUI.RepeatButton (new Rect (sWidth - sWidth / 14, sHeight - sHeight / 14, sWidth / 14, sHeight / 14), "", btnRStyle)) {
 			dir = 1;
 			transform.localScale = new Vector3(-1, 1, 1);
 		}

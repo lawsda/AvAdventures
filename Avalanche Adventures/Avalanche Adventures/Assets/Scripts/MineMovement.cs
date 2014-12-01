@@ -17,7 +17,7 @@ public class MineMovement : MonoBehaviour {
 		sHeight = Screen.height;
 		anim = GetComponent<Animator> ();
 		
-		fallSpeed = sHeight / 100.0f;
+		fallSpeed = sHeight / 120.0f;
 	}
 	
 	// Update is called once per frame

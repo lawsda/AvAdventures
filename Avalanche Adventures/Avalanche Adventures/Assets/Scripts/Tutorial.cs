@@ -44,6 +44,8 @@ public class Tutorial : MonoBehaviour {
 		highScore = PlayerPrefs.GetInt (highScoreKey, 0);
 
 		tutorialStep = 1;
+
+		tutorialStyle.fontSize = (int) sHeight / 20;
 	}
 	
 	// Update is called once per frame
